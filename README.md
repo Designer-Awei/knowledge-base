@@ -137,10 +137,17 @@ pnpm dev
 根据你的操作系统，在终端中运行以下命令：
 
 ```bash
-# Windows
+# Windows (CMD)
 start "C:\Path\To\Your\chrome.exe" --remote-debugging-port=9222
 # 或者默认安装路径
 start chrome --remote-debugging-port=9222
+
+# Windows (PowerShell)
+& "C:\Path\To\Your\chrome.exe" --remote-debugging-port=9222
+# 或者使用Start-Process
+Start-Process -FilePath "C:\Path\To\Your\chrome.exe" -ArgumentList "--remote-debugging-port=9222"
+# 默认安装路径示例
+& "C:\Program Files\Google\Chrome\Application\chrome.exe" --remote-debugging-port=9222
 
 # macOS
 open -a "/Applications/Google Chrome.app" --args --remote-debugging-port=9222
@@ -152,6 +159,11 @@ open -a "Google Chrome" --args --remote-debugging-port=9222
 # 或者默认安装路径
 google-chrome --remote-debugging-port=9222
 ```
+
+启动Chrome后，请验证远程调试模式是否成功启用：
+1. 在Chrome地址栏输入 `chrome://version`
+2. 检查"命令行"部分是否包含 `--remote-debugging-port=9222`
+3. 若包含，则表示远程调试已成功启用
 
 如果命令执行失败，请确保 Chrome 已正确安装，并尝试手动打开 Chrome 后在地址栏输入：`chrome://inspect/#devices`
 
