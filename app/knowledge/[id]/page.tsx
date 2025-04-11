@@ -130,29 +130,38 @@ export default function KnowledgeCardDetail({ params }: { params: Promise<{ id: 
                   <ReactMarkdown
                     components={{
                       a: ({ node, ref, href, children, ...props }) => {
-                        if (children && children.toString().includes("点击查看原文") || children.toString().includes("点击查看全文")) {
+                        // 移除原文链接的markdown格式
+                        const text = children.toString();
+                        const isOriginalLink = text.includes("[点击查看原文]") || text.includes("[点击查看全文]");
+                        
+                        if (isOriginalLink) {
+                          // 提取实际的URL
+                          const urlMatch = text.match(/\((.*?)\)/);
+                          const url = urlMatch ? urlMatch[1] : href;
+                          
                           return (
                             <a 
-                              href={href} 
+                              href={url} 
                               target="_blank" 
                               rel="noopener noreferrer" 
-                              className="view-original-link"
-                              {...props}
+                              className="text-blue-600 underline hover:text-blue-800"
                             >
-                              {children}
+                              点击查看原文
                             </a>
-                          )
+                          );
                         }
+                        
                         return (
                           <a 
                             href={href} 
                             target="_blank" 
                             rel="noopener noreferrer" 
+                            className="text-blue-600 underline hover:text-blue-800"
                             {...props}
                           >
                             {children}
                           </a>
-                        )
+                        );
                       },
                     }}
                   >
